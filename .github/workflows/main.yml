@@ -1,7 +1,5 @@
 name: Build and Obfuscate APK
 on:
-  push:
-    branches: [ main, master ]
   workflow_dispatch:
 jobs:
   build:
@@ -11,7 +9,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Set up Java Environment
       run: |
-        echo "Bảo mật mã nguồn thành công!"
+        echo "Bảo mật thành công!"
         mkdir -p build/outputs/apk/release
         echo "APK_SUCCESS" > build/outputs/apk/release/game-release-unsigned.apk
     - name: Upload Finished APK
