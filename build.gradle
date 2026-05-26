@@ -1,0 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+
+allprojects {
+    apply plugin: "java-library"
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+configure(subprojects) {
+    apply plugin: "java-library"
+}
