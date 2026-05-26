@@ -1,0 +1,12 @@
+apply plugin: "com.android.application"
+
+android {
+    compileSdk 33
+    defaultConfig {
+        applicationId "com.mygame.party"
+        minSdk 19
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+    }
+}
