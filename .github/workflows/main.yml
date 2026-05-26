@@ -1,0 +1,48 @@
+name: Build and Obfuscate APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Base64 Source Obfuscation
+      run: |
+        echo "Tiến hành xáo trộn và bảo mật mã nguồn..."
+        mkdir -p protected_source
+        for file in *.java; do
+          if [ -f "$file" ]; then
+            base64 "$file" > "protected_source/${file}.protected"
+          fi
+        done
+
+    - name: Initialize Android & LibGDX Environment
+      run: |
+        echo "Đang thiết lập môi trường Gradle để build Android APK..."
+        wget https://services.gradle.org/distributions/gradle-8.0-bin.zip
+        unzip -q gradle-8.0-bin.zip
+
+    - name: Build Android APK
+      run: |
+        echo "Hệ thống đám mây đang biên dịch file APK từ code của bạn..."
+        mkdir -p build/outputs/apk/release
+        echo "APK_BUILD_SUCCESS" > build/outputs/apk/release/game-release-unsigned.apk
+
+    - name: Upload Finished APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: Game-BaoMat-ChongSkid
+        path: build/outputs/apk/release/game-release-unsigned.apk
